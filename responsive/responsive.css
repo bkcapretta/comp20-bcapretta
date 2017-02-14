@@ -1,4 +1,4 @@
-<!-- Photo 6 - Bottom right: no words -->
+/* Photo 6 - Bottom right: no words */
 @media screen and (max-width: 600px) {
 	.ralphy {
 		width: 250px;
@@ -7,7 +7,7 @@
 	}
 }
 
-<!-- Photo 5 - Bottom left: Watch this, Lise... -->
+/* Photo 5 - Bottom left: Watch this, Lise... */
 @media screen and (min-width: 601px) {
 	.ralphy {
 		width: 250px;
@@ -16,7 +16,7 @@
 	}
 }
 
-<!-- Photo 4 - Middle right: And the only reason I gave you... -->
+/* Photo 4 - Middle right: And the only reason I gave you... */
 @media screen and (min-width: 801px) {
 	.ralphy {
 		width: 250px;
@@ -25,7 +25,7 @@
 	}
 }
 
-<!-- Photo 3 - Middle left: Now you listen to me! -->
+/* Photo 3 - Middle left: Now you listen to me! */
 @media screen and (min-width: 1001px) {
 	.ralphy {
 		width: 250px;
@@ -34,7 +34,7 @@
 	}
 }
 
-<!-- Photo 2 - Top right: No ooo -->
+/* Photo 2 - Top right: No ooo */
 @media screen and (min-width: 1201px) {
 	.ralphy {
 		width: 250px;
@@ -43,7 +43,7 @@
 	}
 }
 
-<!-- Photo 1 - Top left: yes. I love lisa simpson -->
+/* Photo 1 - Top left: yes. I love lisa simpson */
 @media screen and (min-width: 1401px) {
 	.ralphy {
 		width: 250px;
