@@ -1,0 +1,24 @@
+body {
+	text-align: center;
+}
+
+#title {
+	color: blue;
+	font-size: 40px;
+	text-align: center;
+	font: comic;
+}
+
+#failvideo {
+	display: block;
+	margin: 0 auto;
+}
+
+
+
+#lyrics {
+	text-align: center;
+	color: red;
+	font: comic;
+	font-size: 30px;
+}
