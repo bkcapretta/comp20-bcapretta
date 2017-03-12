@@ -20,14 +20,17 @@ passengers and the given car png is used for drivers.
 --------------------------------------------------------------------------------
 
 Identify anyone with whom you have collaborated or discussed the assignment.
-
 - Iris Oliver and Nikita Rao helped to answer my questions. Ming also helped during
 office hours.
 
 --------------------------------------------------------------------------------
 
 Say apporximately how many hours you have spent completing the assignment.
-
 - 3 hours
 
+--------------------------------------------------------------------------------
+
+Extra Note: Ming gave me an extension until Saturday. I know I pushed my final 
+version past midnight, but I hope that's okay! I was finishing up the arith
+assignment in Comp40 today.
 
