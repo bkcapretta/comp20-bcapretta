@@ -2,33 +2,142 @@
 	<head>
 		<title>Google Maps API</title>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/
-													js?sensor=true"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry"></script>
 		<link rel="stylesheet" href="style.css" />
 		<script>
 			var myLat = 0;
 			var myLng = 0;
-			var request = new XMLHttpRequest();
+			
 			var me = new google.maps.LatLng(myLat, myLng);
 			var myOptions = {
-				zoom: 13;
-				center: me;
+				zoom: 13,
+				center: me,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			};
 			var map;
 			var marker;
 			var infowindow = new google.maps.InfoWindow();
 
+
 			function init()
 			{
-				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+				map = new google.maps.Map(document.getElementById("map_canvas"),
+																	myOptions);
 				getMyLocation();
+			}
+
+			function getMyLocation() {
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(function(position) {
+						myLat = position.coords.latitude;
+						myLng = position.coords.longitude;
+						renderMap();
+						getData();
+					});
+				}
+				else {
+					alert("Geolocation is not supported by your web browser.");
+				}
+			}
+
+			function renderMap()
+			{
+				me = new google.maps.LatLng(myLat, myLng);
+				map.panTo(me);
+
+				marker = new google.maps.Marker({
+					position: me,
+					title: "eOhwZ42u here!"
+				});
+				marker.setMap(map);
+				
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.setContent(marker.title);
+					infowindow.open(map, marker);
+				});
+			}
+
+			function getData() {
+				var request = new XMLHttpRequest();
+				request.open("POST", "https://defense-in-derpth.herokuapp.com/submit", true);
+				
+				request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+				request.onreadystatechange = function() { // calls func when 
+					// state changes
+					if (request.readyState == 4 && request.status == 200) {
+						console.log("Got the request!");
+						data = request.responseText;
+						//console.log(data);
+						loc = JSON.parse(data);
+						printDist(loc);
+					}
+					else if (request.readyState == 4 && request.status != 200) {
+						console.log("Request not in database.");
+					}
+					else {
+						console.log("In progress...");
+					}
+					
+				};
+				request.send("username=eOhwZ42u&lat="+myLat+"&lng="+myLng);
+			}
+
+			function printDist(loc) {
+				//if (Object.getOwnPropertyNames(loc) == "vehicles") {
+					// for (var i = 0; i < loc.vehicles.length; i++) {
+					// 	console.log(loc.vehicles[i]["username"]);
+					// 	var lat = loc.vehicles[i]["lat"];
+					// 	var lng = loc.vehicles[i]["lng"];
+					// 	var user = loc.vehicles[i]["username"];
+
+					// 	neighbor = new google.maps.LatLng(lat, lng);
+
+					// 	redMarker = new google.maps.Marker({
+					// 		position: neighbor,
+					// 		icon: "person.gif"
+					// 	});
+						
+					// 	infoWindow(redMarker, user, neighbor);
+					// }
+				//}
+				//else if (Object.getOwnPropertyNames(loc) == "passengers"){
+					for (var i = 0; i < loc.passengers.length; i++) {
+						console.log(loc.passengers[i]["username"]);
+						var lat = loc.passengers[i]["lat"];
+						var lng = loc.passengers[i]["lng"];
+						var user = loc.passengers[i]["username"];
+
+						neighbor = new google.maps.LatLng(lat, lng);
+
+						carMarker = new google.maps.Marker({
+							position: neighbor,
+							icon: "black_car.png"
+						});
+						
+						infoWindow(marker, user, neighbor);
+					}
+				//}
+			}
+
+			function infoWindow(marker, user, neighbor) {
+					google.maps.event.addListener(marker, 'click', function() {
+						
+						var distance = (google.maps.geometry.spherical.computeDistanceBetween(neighbor, me));
+						distance = Math.round((distance/1609.3)*1000)/1000;
+
+						//marker.setMap(map);
+						infowindow.setContent(marker.title);
+						infowindow.open(map, marker);
+						infowindow.setContent("User "+user+" is "+distance+" miles away");
+						
+					});
 			}
 		</script>
 	</head>
 
-	<body>
-
+	<body onload="init()">
+		<div id="map_canvas"></div>
 	</body>
 
 </html>
