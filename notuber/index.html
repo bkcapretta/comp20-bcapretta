@@ -47,13 +47,14 @@
 
 				marker = new google.maps.Marker({
 					position: me,
-					title: "eOhwZ42u here!"
+					icon: "bianca.png"
 				});
 				marker.setMap(map);
 				
 				google.maps.event.addListener(marker, 'click', function() {
 					infowindow.setContent(marker.title);
 					infowindow.open(map, marker);
+					infowindow.setContent("Me, eOhwZ42u here!");
 				});
 			}
 
@@ -70,7 +71,7 @@
 						data = request.responseText;
 						//console.log(data);
 						loc = JSON.parse(data);
-						printDist(loc);
+						showMarkers(loc);
 					}
 					else if (request.readyState == 4 && request.status != 200) {
 						console.log("Request not in database.");
@@ -83,25 +84,26 @@
 				request.send("username=eOhwZ42u&lat="+myLat+"&lng="+myLng);
 			}
 
-			function printDist(loc) {
-				//if (Object.getOwnPropertyNames(loc) == "vehicles") {
-					// for (var i = 0; i < loc.vehicles.length; i++) {
-					// 	console.log(loc.vehicles[i]["username"]);
-					// 	var lat = loc.vehicles[i]["lat"];
-					// 	var lng = loc.vehicles[i]["lng"];
-					// 	var user = loc.vehicles[i]["username"];
+			function showMarkers(loc) {
+				if (Object.getOwnPropertyNames(loc) == "vehicles") {
+					for (var i = 0; i < loc.vehicles.length; i++) {
+						console.log(loc.vehicles[i]["username"]);
+						var lat = loc.vehicles[i]["lat"];
+						var lng = loc.vehicles[i]["lng"];
+						var user = loc.vehicles[i]["username"];
 
-					// 	neighbor = new google.maps.LatLng(lat, lng);
+						neighbor = new google.maps.LatLng(lat, lng);
 
-					// 	redMarker = new google.maps.Marker({
-					// 		position: neighbor,
-					// 		icon: "person.gif"
-					// 	});
+						personMarker = new google.maps.Marker({
+							position: neighbor,
+							icon: "person.gif"
+						});
+						personMarker.setMap(map);
 						
-					// 	infoWindow(redMarker, user, neighbor);
-					// }
-				//}
-				//else if (Object.getOwnPropertyNames(loc) == "passengers"){
+						infoWindow(personMarker, user, neighbor);
+					}
+				}
+				else if (Object.getOwnPropertyNames(loc) == "passengers"){
 					for (var i = 0; i < loc.passengers.length; i++) {
 						console.log(loc.passengers[i]["username"]);
 						var lat = loc.passengers[i]["lat"];
@@ -114,22 +116,24 @@
 							position: neighbor,
 							icon: "black_car.png"
 						});
+						carMarker.setMap(map);
 						
-						infoWindow(marker, user, neighbor);
+						infoWindow(carMarker, user, neighbor);
+
 					}
-				//}
+				}
 			}
 
 			function infoWindow(marker, user, neighbor) {
 					google.maps.event.addListener(marker, 'click', function() {
-						
+						//console.log("in Info Window");
 						var distance = (google.maps.geometry.spherical.computeDistanceBetween(neighbor, me));
 						distance = Math.round((distance/1609.3)*1000)/1000;
 
-						//marker.setMap(map);
 						infowindow.setContent(marker.title);
 						infowindow.open(map, marker);
 						infowindow.setContent("User "+user+" is "+distance+" miles away");
+						
 						
 					});
 			}
