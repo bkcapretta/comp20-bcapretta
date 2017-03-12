@@ -2,7 +2,8 @@
 	<head>
 		<title>Google Maps API</title>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/
+									js?sensor=false&libraries=geometry"></script>
 		<link rel="stylesheet" href="style.css" />
 		<script>
 			var myLat = 0;
@@ -61,15 +62,11 @@
 			function getData() {
 				var request = new XMLHttpRequest();
 				request.open("POST", "https://defense-in-derpth.herokuapp.com/submit", true);
-				
 				request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-				request.onreadystatechange = function() { // calls func when 
-					// state changes
+				request.onreadystatechange = function() { 
 					if (request.readyState == 4 && request.status == 200) {
-						console.log("Got the request!");
 						data = request.responseText;
-						//console.log(data);
 						loc = JSON.parse(data);
 						showMarkers(loc);
 					}
@@ -79,7 +76,6 @@
 					else {
 						console.log("In progress...");
 					}
-					
 				};
 				request.send("username=eOhwZ42u&lat="+myLat+"&lng="+myLng);
 			}
@@ -87,7 +83,6 @@
 			function showMarkers(loc) {
 				if (Object.getOwnPropertyNames(loc) == "vehicles") {
 					for (var i = 0; i < loc.vehicles.length; i++) {
-						console.log(loc.vehicles[i]["username"]);
 						var lat = loc.vehicles[i]["lat"];
 						var lng = loc.vehicles[i]["lng"];
 						var user = loc.vehicles[i]["username"];
@@ -105,7 +100,6 @@
 				}
 				else if (Object.getOwnPropertyNames(loc) == "passengers"){
 					for (var i = 0; i < loc.passengers.length; i++) {
-						console.log(loc.passengers[i]["username"]);
 						var lat = loc.passengers[i]["lat"];
 						var lng = loc.passengers[i]["lng"];
 						var user = loc.passengers[i]["username"];
@@ -119,22 +113,19 @@
 						carMarker.setMap(map);
 						
 						infoWindow(carMarker, user, neighbor);
-
 					}
 				}
 			}
 
 			function infoWindow(marker, user, neighbor) {
 					google.maps.event.addListener(marker, 'click', function() {
-						//console.log("in Info Window");
-						var distance = (google.maps.geometry.spherical.computeDistanceBetween(neighbor, me));
+						var distance = (google.maps.geometry.spherical.
+							computeDistanceBetween(neighbor, me));
 						distance = Math.round((distance/1609.3)*1000)/1000;
 
 						infowindow.setContent(marker.title);
 						infowindow.open(map, marker);
 						infowindow.setContent("User "+user+" is "+distance+" miles away");
-						
-						
 					});
 			}
 		</script>
