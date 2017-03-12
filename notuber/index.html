@@ -89,13 +89,13 @@
 
 						neighbor = new google.maps.LatLng(lat, lng);
 
-						personMarker = new google.maps.Marker({
+						carMarker = new google.maps.Marker({
 							position: neighbor,
 							icon: "black_car.png"
 						});
-						personMarker.setMap(map);
+						carMarker.setMap(map);
 						
-						infoWindow(personMarker, user, neighbor);
+						infoWindow(carMarker, user, neighbor);
 					}
 				}
 				else if (Object.getOwnPropertyNames(loc) == "passengers"){
@@ -106,13 +106,13 @@
 
 						neighbor = new google.maps.LatLng(lat, lng);
 
-						carMarker = new google.maps.Marker({
+						personMarker = new google.maps.Marker({
 							position: neighbor,
 							icon: "person.gif"
 						});
-						carMarker.setMap(map);
+						personMarker.setMap(map);
 						
-						infoWindow(carMarker, user, neighbor);
+						infoWindow(personMarker, user, neighbor);
 					}
 				}
 			}
