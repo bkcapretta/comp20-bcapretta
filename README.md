@@ -1,4 +1,4 @@
-#Finalizing Your Learning Portfolio
+# Finalizing Your Learning Portfolio
 By: Bianca Capretta
 Date: 4/26/17
 
